@@ -24,7 +24,10 @@ jobs:
     - name: List images
       run: docker image ls
     - name: Docker tag
-      run: docker tag adservice:latest 721699489018.dkr.ecr.eu-west-1.amazonaws.com/onlineboutique:latest
+      env: 
+        ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+        REGION: ${{ secrets.AWS_REGION }}
+      run: docker tag adservice:latest $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/onlineboutique:latest
     - name: Login to ECR
       uses: aws-actions/configure-aws-credentials@v1
       with: 
@@ -37,3 +40,4 @@ jobs:
         aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
     - name: Push Image
       run: docker push 721699489018.dkr.ecr.eu-west-1.amazonaws.com/onlineboutique:latest
+    
