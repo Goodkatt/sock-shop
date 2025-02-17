@@ -197,6 +197,14 @@ shippingService:
       cpu: 200m
       memory: 128Mi
 
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 4
+  targetCPU: 15
+  targetMemory: 15
+
 cartDatabase:
   # Specifies the type of the cartservice's database, could be either redis or spanner.
   type: redis
@@ -213,12 +221,6 @@ cartDatabase:
     endpointPort: ""
     certificate: ""
 
-  hpaValues:
-    name: frontend-hpa
-    nameSpace: default
-    nameDeployment: frontend
-    minReplica: 1
-    maxReplica: 2
 
 # @TODO: This service is not currently available in Helm.
 # https://github.com/GoogleCloudPlatform/microservices-demo/tree/main/kustomize/components/shopping-assistant
