@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dev
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=confirm
+spec:
+  project: default
+  source:
+    chart: onlineboutique
+    #path: helm-test
+    repoURL: 721699489018.dkr.ecr.eu-west-1.amazonaws.com
+    targetRevision: 0.10.2
+    helm:
+      releaseName: onlineboutique
+      #passCredentials: true
+      valueFiles: 
+        - values.yaml
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: default

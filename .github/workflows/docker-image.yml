@@ -3,17 +3,17 @@ name: Build Docker Image for Changed Services
 on:
   push:
     branches:
-      - main  # Trigger on commits to the 'main' branch
+      - main  
   pull_request:
     branches:
-      - main  # Trigger on pull requests to the 'main' branch
+      - main  
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [adservice, cartservice, userservice, orderservice, paymentservice]  # List all your services here
+        service: [adservice, cartservice, userservice, orderservice, paymentservice]  
 
     steps:
     - name: Checkout code

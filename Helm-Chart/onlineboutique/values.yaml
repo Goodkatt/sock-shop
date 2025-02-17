@@ -213,6 +213,13 @@ cartDatabase:
     endpointPort: ""
     certificate: ""
 
+  hpaValues:
+    name: frontend-hpa
+    nameSpace: default
+    nameDeployment: frontend
+    minReplica: 1
+    maxReplica: 2
+
 # @TODO: This service is not currently available in Helm.
 # https://github.com/GoogleCloudPlatform/microservices-demo/tree/main/kustomize/components/shopping-assistant
 shoppingAssistantService:

@@ -1,0 +1,47 @@
+Cluster Autoscaler
+########################################################################################################################################################################
+aws iam create-policy \
+--policy-name AmazonEKSClusterAutoscalerPolicy \
+--policy-document file://cluster-autoscaler-policy.json
+
+eksctl create iamserviceaccount \
+  --cluster=example \
+  --region=eu-west-1 \
+  --namespace=kube-system \
+  --name=cluster-autoscaler \
+  --attach-policy-arn=arn:aws:iam::721699489018:policy/AmazonEKSClusterAutoscalerPolicy \
+  --override-existing-serviceaccounts \
+  --approve
+
+curl -o cluster-autoscaler-autodiscover.yaml https://raw.githubusercontent.com/kubernetes/autoscaler/master/cluster-autoscaler/cloudprovider/aws/examples/cluster-autoscaler-autodiscover.yaml
+kubectl apply -f cluster-autoscaler-autodiscover.yaml
+kubectl -n kube-system edit deployment.apps/cluster-autoscaler
+
+
+kubectl set image deployment cluster-autoscaler \
+-n kube-system \
+cluster-autoscaler=k8s.gcr.io/autoscaling/cluster-autoscaler:v1.21.2
+
+Autoscaler logs
+kubectl -n kube-system logs -f deployment.apps/cluster-autoscaler
+########################################################################################################################################################################
+
+Metrics Server
+###########################################################################################################################################################################
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml   
+kubectl get deployment metrics-server -n kube-system
+
+Load Test
+########################################################################################################################################################################
+for i in {1..5000}; do
+  curl -s k8s-default-frontend-12ee675b03-4733fc5f14c1cca9.elb.eu-west-1.amazonaws.com/ & 
+done
+kubectl get hpa -n default frontend-hpa --watch
+
+
+
+
+
+Argo Doesnt get notified about the newer charts so hard-refresh it
+argocd app get --hard-refresh argocd/${APP_NAME}
+argocd app sync --prune argocd/${APP_NAME}
