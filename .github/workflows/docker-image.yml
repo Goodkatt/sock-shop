@@ -213,6 +213,8 @@ jobs:
         cat Argo-Application/application.yaml
 
 
+
+
     # - name: Update application.yaml with the new Helm chart version
     #   run: |
     #     sed -i 's/^ *targetRevision: .*/  targetRevision: '"$new_version_chart"'/' Argo-Application/application.yaml
