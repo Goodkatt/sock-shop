@@ -16,13 +16,12 @@ apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: frontend-hpa
-  namespace: {{ .Release.Namespace }}
+  namespace: default
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ .Values.frontend.name }}
+    name: frontend
   minReplicas: 1
   maxReplicas: 4
   targetCPUUtilizationPercentage: 15
-  

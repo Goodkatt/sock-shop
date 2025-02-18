@@ -62,6 +62,7 @@ securityContext:
 adService:
   create: true
   name: adservice
+  replicas: 5
   resources:
     requests:
       cpu: 200m
@@ -73,6 +74,7 @@ adService:
 cartService:
   create: true
   name: cartservice
+  replicas: 5
   resources:
     requests:
       cpu: 200m
@@ -199,9 +201,9 @@ shippingService:
 
 
 autoscaling:
-  enabled: true
+  enabled: false
   minReplicas: 1
-  maxReplicas: 4
+  maxReplicas: 14
   targetCPU: 15
   targetMemory: 15
 
