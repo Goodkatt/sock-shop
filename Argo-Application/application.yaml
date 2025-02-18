@@ -10,7 +10,7 @@ spec:
   source:
     chart: onlineboutique
     repoURL: 721699489018.dkr.ecr.eu-west-1.amazonaws.com
-    targetRevision: 0.10.42
+    targetRevision: 0.10.50
     helm:
       releaseName: onlineboutique
       valueFiles: 

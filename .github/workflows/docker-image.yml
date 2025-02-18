@@ -220,7 +220,7 @@ jobs:
       run: |
         kubectl apply -f Argo-Application/application.yaml
         
-        
+
 
 
 
