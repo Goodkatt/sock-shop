@@ -203,7 +203,7 @@ jobs:
       with: 
         valueFile: 'Argo-Application/application.yaml'
         propertyPath: 'spec.source.targetRevision'
-        value: 0.10.51
+        value: $new_version_chart
         commitChange: false
     - name: cat
       run: | 
