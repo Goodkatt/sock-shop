@@ -72,6 +72,7 @@ jobs:
     - name: Increment patch version
       id: increment_patch
       run: |
+        echo "Current version: $value" 
         version="$value"
         IFS='.' read -r major minor patch <<< "$version"
 
@@ -100,5 +101,4 @@ jobs:
           --region eu-west-1
   
     
-     
      
