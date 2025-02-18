@@ -226,10 +226,9 @@ jobs:
         export AWS_REGION=${{ secrets.AWS_REGION }}
         aws eks update-kubeconfig --name example --region $AWS_REGION
         kubectl apply -f Argo-Application/application.yaml
-        kubectl get nodes
-    - name: Apply ArgoCD application to Kubernetes
-      run: |
-        kubectl apply -f Argo-Application/application.yaml
+    # - name: Apply ArgoCD application to Kubernetes
+    #   run: |
+    #     kubectl apply -f Argo-Application/application.yaml
         
 
 
