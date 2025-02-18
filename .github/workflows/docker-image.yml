@@ -62,8 +62,11 @@ jobs:
       run: docker push 721699489018.dkr.ecr.eu-west-1.amazonaws.com/image_repo:latest
     - name: red from dynamodb
       run: | 
-        VERSION=$(aws dynamodb get-item --table-name adservice_versions --key '{"adservice_version": {"S": "version_number"}}' --region eu-west-1 --query 'Item.value.S' --output text)
-        
+        output=$(aws dynamodb get-item --table-name adservice_versions --key '{"adservice_version": {"S": "version_number"}}' --region eu-west-1 --query 'Item.value.S' --output text)
+        echo "value=$output" >> $GITHUB_ENV
+    - name: Use the output in another step
+      run: |
+        echo "The value from DynamoDB is: $value"
     - name: VERSION
       run: | 
         echo $VERSION
