@@ -99,5 +99,5 @@ jobs:
           --expression-attribute-names '{"#val": "value"}' \
           --expression-attribute-values "{\"new_val\": {\"S\": \"$new_version\"}}" \
           --region eu-west-1
-
+  
     
