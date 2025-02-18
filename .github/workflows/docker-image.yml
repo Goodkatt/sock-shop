@@ -174,7 +174,10 @@ jobs:
       run: |
         sed -i 's/^version: .*/version: '"$new_version_chart"'/' Helm-Chart/onlineboutique/Chart.yaml
         cat Helm-Chart/onlineboutique/Chart.yaml  # Print the updated Chart.yaml to verify
-     
+    - name: Package the Helm chart
+      run: |
+        helm package Helm-Chart/onlineboutique
+        ls -l 
 
 
 
