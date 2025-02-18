@@ -170,7 +170,10 @@ jobs:
           --attribute-updates '{"value": {"Value": {"S": "'"$new_version_chart"'"}, "Action": "PUT"}}' \
           --return-values UPDATED_NEW \
           --region eu-west-1
-    
+    - name: Update Chart.yaml with the new version (without committing)
+      run: |
+        sed -i 's/^version: .*/version: '"$new_version_chart"'/' Helm-Chart/onlineboutique/Chart.yaml
+        cat Helm-Chart/onlineboutique/Chart.yaml  # Print the updated Chart.yaml to verify
      
 
 
