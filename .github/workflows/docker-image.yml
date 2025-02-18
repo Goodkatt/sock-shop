@@ -94,7 +94,7 @@ jobs:
           --key '{"adservice_version": {"S": "version_number"}}' \
           --update-expression "SET #val = :new_val" \
           --expression-attribute-names '{"#val": "value"}' \
-          --expression-attribute-values '{":new_val": {"S": "$new_version"}}' \
+          --expression-attribute-values "{\"new_val\": {\"S\": \"$new_version\"}}" \
           --region eu-west-1
 
     
