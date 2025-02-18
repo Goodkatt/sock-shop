@@ -195,13 +195,16 @@ jobs:
 
 
 
-    # - name: yml update
-    #   uses: fjogeleit/yaml-update-action@main
-    #   with: 
-    #     valueFile: 'Argo-Application/application.yaml'
-    #     propertyPath: 'spec.targetRevision'
-    #     value: ${new_version_chart}
-    #     commitChange: false
+    - name: yml update
+      uses: fjogeleit/yaml-update-action@main
+      with: 
+        valueFile: 'Argo-Application/application.yaml'
+        propertyPath: 'spec.source.targetRevision'
+        value: ${new_version_chart}
+        commitChange: false
+    - name: cat
+      run: | 
+        cat Argo-Application/application.yaml
 
 
     # - name: Update application.yaml with the new Helm chart version
