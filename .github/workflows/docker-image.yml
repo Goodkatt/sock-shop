@@ -181,7 +181,7 @@ jobs:
       run: |
         helm package Helm-Chart/onlineboutique
         ls -l 
-        helm push Helm-Chart/onlineboutique-*.tgz oci://${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/
+        helm push onlineboutique-*.tgz oci://${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/
 
 
 
