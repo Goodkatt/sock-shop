@@ -198,12 +198,15 @@ jobs:
     - name: Application Version
       run: |
         echo "XXXXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx: $new_version_chart"
+    - name: read from dynamodb
+      run: | 
+        echo "value_x=$new_version_chart" >> $GITHUB_ENV
     - name: yml update
       uses: fjogeleit/yaml-update-action@main
       with: 
         valueFile: 'Argo-Application/application.yaml'
         propertyPath: 'spec.source.targetRevision'
-        value: $new_version_chart
+        value: ${{ env.value_x }}
         commitChange: false
     - name: cat
       run: | 
