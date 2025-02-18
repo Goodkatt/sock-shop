@@ -174,10 +174,14 @@ jobs:
       run: |
         sed -i 's/^version: .*/version: '"$new_version_chart"'/' Helm-Chart/onlineboutique/Chart.yaml
         cat Helm-Chart/onlineboutique/Chart.yaml  # Print the updated Chart.yaml to verify
+    - name: Log in to AWS ECR for Helm
+      run: |
+        aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | helm registry login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
     - name: Package the Helm chart
       run: |
         helm package Helm-Chart/onlineboutique
         ls -l 
+        helm push Helm-Chart/onlineboutique-*.tgz oci://${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/
 
 
 
