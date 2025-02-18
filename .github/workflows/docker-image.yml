@@ -62,15 +62,6 @@ jobs:
     - name: Use the output in another step
       run: |
         echo "The value from DynamoDB is: $value"
-
-
-    - name: read chart version from dynamodb
-      run: | 
-        output_chart_version=$(aws dynamodb get-item --table-name adservice_versions --key '{"adservice_version": {"S": "version_number_chart"}}' --region eu-west-1 --query 'Item.value.S' --output text)
-        echo "value_chart_version=$output_chart_version" >> $GITHUB_ENV
-    - name: Use the output in another step
-      run: |
-        echo "The value from DynamoDB for the Chart is: $value_chart_version"
     - name: Increment patch version
       id: increment_patch
       run: |
@@ -89,6 +80,61 @@ jobs:
     - name: Use the incremented patch version
       run: |
         echo "The incremented patch version is: $new_version"
+
+
+
+
+
+
+
+    - name: read chart version from dynamodb
+      run: | 
+        output_chart_version=$(aws dynamodb get-item --table-name adservice_versions --key '{"adservice_version": {"S": "version_number_chart"}}' --region eu-west-1 --query 'Item.value.S' --output text)
+        echo "value_chart_version=$output_chart_version" >> $GITHUB_ENV
+    - name: Use the output in another step
+      run: |
+        echo "The value from DynamoDB for the Chart is: $value_chart_version"
+    - name: Increment Chart patch version
+      id: increment_patch_chart
+      run: |
+        echo "Current version: $value_chart_version" 
+        version_chart_version="$value_chart_version"
+        IFS='.' read -r major minor patch <<< "$version_chart_version"
+
+        patch=$((patch + 1))
+
+        new_version_chart="$major.$minor.$patch"
+
+        echo "New version: $new_version_chart"
+
+        echo "new_version_chart=$new_version_chart" >> $GITHUB_ENV
+
+    - name: Use the incremented patch version
+      run: |
+        echo "The incremented patch version is: $new_version_chart"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     - name: Docker tag
       env: 
         ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
