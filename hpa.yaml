@@ -25,3 +25,4 @@ spec:
   minReplicas: 1
   maxReplicas: 4
   targetCPUUtilizationPercentage: 15
+  

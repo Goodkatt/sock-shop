@@ -9,12 +9,10 @@ spec:
   project: default
   source:
     chart: onlineboutique
-    #path: helm-test
     repoURL: 721699489018.dkr.ecr.eu-west-1.amazonaws.com
     targetRevision: "${new_version_chart}"
     helm:
       releaseName: onlineboutique
-      #passCredentials: true
       valueFiles: 
         - values.yaml
   destination:
@@ -23,4 +21,3 @@ spec:
 
 
 
-    
