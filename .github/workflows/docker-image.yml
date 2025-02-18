@@ -195,7 +195,9 @@ jobs:
 
 
 
-
+    - name: Application Version
+      run: |
+        echo "XXXXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx: $new_version_chart"
     - name: yml update
       uses: fjogeleit/yaml-update-action@main
       with: 
