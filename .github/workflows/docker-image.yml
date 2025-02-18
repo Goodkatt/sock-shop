@@ -192,13 +192,16 @@ jobs:
     #     echo "Updating targetRevision in application.yaml to $new_version_chart"
     #     yq eval ".spec.source.targetRevision = \"$new_version_chart\"" -i Argo-Application/application.yaml
     #     cat Argo-Application/application.yaml  # Optional: To verify the update
-    - name: yml update
-      uses: fjogeleit/yaml-update-action@main
-      with: 
-        valueFile: 'Argo-Application/application.yaml'
-        propertyPath: 'spec.targetRevision'
-        value: ${new_version_chart}
-        commitChange: false
+
+
+    
+    # - name: yml update
+    #   uses: fjogeleit/yaml-update-action@main
+    #   with: 
+    #     valueFile: 'Argo-Application/application.yaml'
+    #     propertyPath: 'spec.targetRevision'
+    #     value: ${new_version_chart}
+    #     commitChange: false
 
 
     # - name: Update application.yaml with the new Helm chart version
