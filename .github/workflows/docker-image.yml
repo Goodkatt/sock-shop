@@ -194,7 +194,7 @@ jobs:
     #     cat Argo-Application/application.yaml  # Optional: To verify the update
 
 
-    
+
     # - name: yml update
     #   uses: fjogeleit/yaml-update-action@main
     #   with: 
@@ -219,6 +219,7 @@ jobs:
     - name: Apply ArgoCD application to Kubernetes
       run: |
         kubectl apply -f Argo-Application/application.yaml
+        
         
 
 
