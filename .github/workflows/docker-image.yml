@@ -55,7 +55,7 @@ jobs:
       run: |
         aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
     
-    - name: red from dynamodb
+    - name: read from dynamodb
       run: | 
         output=$(aws dynamodb get-item --table-name adservice_versions --key '{"adservice_version": {"S": "version_number"}}' --region eu-west-1 --query 'Item.value.S' --output text)
         echo "value=$output" >> $GITHUB_ENV
@@ -64,6 +64,13 @@ jobs:
         echo "The value from DynamoDB is: $value"
 
 
+    - name: read chart version from dynamodb
+      run: | 
+        output_chart_version=$(aws dynamodb get-item --table-name adservice_versions --key '{"adservice_version": {"S": "version_number_chart"}}' --region eu-west-1 --query 'Item.value.S' --output text)
+        echo "value_chart_version=$output_chart_version" >> $GITHUB_ENV
+    - name: Use the output in another step
+      run: |
+        echo "The value from DynamoDB for the Chart is: $value_chart_version"
     - name: Increment patch version
       id: increment_patch
       run: |
