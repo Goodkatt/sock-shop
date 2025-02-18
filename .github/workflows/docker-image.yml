@@ -91,13 +91,12 @@ jobs:
         # Ensure the $new_version is properly expanded within the command
         echo "Updating DynamoDB with new version: $new_version"
 
-        # Update the DynamoDB table with the new version
+        # Update the DynamoDB table with the new version (similar to the example)
         aws dynamodb update-item \
           --table-name adservice_versions \
           --key '{"adservice_version": {"S": "version_number"}}' \
-          --update-expression "SET #val = :new_val" \
-          --expression-attribute-names '{"#val": "value"}' \
-          --expression-attribute-values "{\"new_val\": {\"S\": \"$new_version\"}}" \
+          --attribute-updates '{"value": {"Value": {"S": "'"$new_version"'"}, "Action": "PUT"}}' \
+          --return-values UPDATED_NEW \
           --region eu-west-1
   
     
