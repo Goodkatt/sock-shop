@@ -183,10 +183,10 @@ jobs:
         ls -l 
         helm push onlineboutique-*.tgz oci://${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/
 
-    - name: Install yq
-      run: |
-        curl -s https://raw.githubusercontent.com/mikefarah/yq/v4.15.1/install.sh | bash
-        sudo mv yq /usr/local/bin/
+    # - name: Install yq
+    #   run: |
+    #     curl -s https://raw.githubusercontent.com/mikefarah/yq/v4.15.1/install.sh | bash
+    #     sudo mv yq /usr/local/bin/
     - name: Update targetRevision in application.yaml with new version
       run: |
         echo "Updating targetRevision in application.yaml to $new_version_chart"
