@@ -62,7 +62,7 @@ securityContext:
 adService:
   create: true
   name: adservice
-  replicas: 5
+  replicas: 1
   resources:
     requests:
       cpu: 200m
@@ -74,7 +74,7 @@ adService:
 cartService:
   create: true
   name: cartservice
-  replicas: 5
+  replicas: 1
   resources:
     requests:
       cpu: 200m
