@@ -182,10 +182,22 @@ jobs:
         helm package Helm-Chart/onlineboutique
         ls -l 
         helm push onlineboutique-*.tgz oci://${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/
-    - name: Update application.yaml with the new Helm chart version
+
+    - name: Install yq
       run: |
-        sed -i 's/^ *targetRevision: .*/  targetRevision: '"$new_version_chart"'/' Argo-Application/application.yaml
-        cat Argo-Application/application.yaml  # Print the updated application.yaml to verif
+        curl -s https://raw.githubusercontent.com/mikefarah/yq/v4.15.1/install.sh | bash
+        sudo mv yq /usr/local/bin/
+    - name: Update targetRevision in application.yaml with new version
+      run: |
+        echo "Updating targetRevision in application.yaml to $new_version_chart"
+        yq eval ".spec.source.targetRevision = \"$new_version_chart\"" -i Argo-Application/application.yaml
+        cat Argo-Application/application.yaml  # Optional: To verify the update
+
+
+    # - name: Update application.yaml with the new Helm chart version
+    #   run: |
+    #     sed -i 's/^ *targetRevision: .*/  targetRevision: '"$new_version_chart"'/' Argo-Application/application.yaml
+    #     cat Argo-Application/application.yaml  # Print the updated application.yaml to verif
     - name: Set up AWS credentials for EKS
       run: |
         export AWS_ACCESS_KEY_ID=${{ secrets.EKS_AWS_ACCESS_KEY_ID }}
@@ -200,7 +212,7 @@ jobs:
 
 
 
-        
+
 
 
 
