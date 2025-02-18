@@ -11,7 +11,7 @@ spec:
     chart: onlineboutique
     #path: helm-test
     repoURL: 721699489018.dkr.ecr.eu-west-1.amazonaws.com
-    targetRevision: 0.10.20
+    targetRevision: 0.10.21
     helm:
       releaseName: onlineboutique
       #passCredentials: true
