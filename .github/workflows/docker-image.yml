@@ -182,6 +182,10 @@ jobs:
         helm package Helm-Chart/onlineboutique
         ls -l 
         helm push onlineboutique-*.tgz oci://${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/
+    - name: Update application.yaml with the new Helm chart version
+      run: |
+        sed -i 's/^ *targetRevision: .*/  targetRevision: '"$new_version_chart"'/' Argo-Application/application.yaml
+        cat Argo-Application/application.yaml  # Print the updated application.yaml to verif
 
 
 
