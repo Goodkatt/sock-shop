@@ -142,6 +142,8 @@ jobs:
       run: docker tag adservice:latest $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/image_repo:$new_version
     - name: Push Image
       run: docker push 721699489018.dkr.ecr.eu-west-1.amazonaws.com/image_repo:$new_version
+
+
     - name: Update DynamoDB with new version
       run: |
         # Ensure the $new_version is properly expanded within the command
@@ -154,7 +156,20 @@ jobs:
           --attribute-updates '{"value": {"Value": {"S": "'"$new_version"'"}, "Action": "PUT"}}' \
           --return-values UPDATED_NEW \
           --region eu-west-1
-  
+
+
+    - name: Update DynamoDB with new version
+      run: |
+        # Ensure the $new_version is properly expanded within the command
+        echo "Updating DynamoDB with new version: $new_version_chart"
+
+        # Update the DynamoDB table with the new version (similar to the example)
+        aws dynamodb update-item \
+          --table-name adservice_versions \
+          --key '{"adservice_version": {"S": "version_number_chart"}}' \
+          --attribute-updates '{"value": {"Value": {"S": "'"$new_version_chart"'"}, "Action": "PUT"}}' \
+          --return-values UPDATED_NEW \
+          --region eu-west-1
     
      
 
