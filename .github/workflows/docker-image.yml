@@ -186,6 +186,12 @@ jobs:
       run: |
         sed -i 's/^ *targetRevision: .*/  targetRevision: '"$new_version_chart"'/' Argo-Application/application.yaml
         cat Argo-Application/application.yaml  # Print the updated application.yaml to verif
-
+    - name: Set up AWS credentials for EKS
+      run: |
+        export AWS_ACCESS_KEY_ID=${{ secrets.EKS_AWS_ACCESS_KEY_ID }}
+        export AWS_SECRET_ACCESS_KEY=${{ secrets.EKS_AWS_SECRET_ACCESS_KEY }}
+        export AWS_REGION=${{ secrets.AWS_REGION }}
+        aws eks update-kubeconfig --name example --region $AWS_REGION
+        kubectl get nodes  # Example to verify the connection
 
 
