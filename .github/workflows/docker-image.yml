@@ -67,8 +67,24 @@ jobs:
     - name: Use the output in another step
       run: |
         echo "The value from DynamoDB is: $value"
-    - name: VERSION
-      run: | 
-        echo $VERSION
+
+
+    - name: Increment patch version
+      id: increment_patch
+      run: |
+        version="$value"
+        IFS='.' read -r major minor patch <<< "$version"
+
+        patch=$((patch + 1))
+
+        new_version="$major.$minor.$patch"
+
+        echo "New version: $new_version"
+
+        echo "new_version=$new_version" >> $GITHUB_ENV
+
+    - name: Use the incremented patch version
+      run: |
+        echo "The incremented patch version is: $new_version"
 
     
