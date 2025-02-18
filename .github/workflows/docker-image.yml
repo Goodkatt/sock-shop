@@ -88,6 +88,9 @@ jobs:
         echo "The incremented patch version is: $new_version"
     - name: Update DynamoDB with new version
       run: |
+        # Ensure the $new_version is properly expanded within the command
+        echo "Updating DynamoDB with new version: $new_version"
+
         # Update the DynamoDB table with the new version
         aws dynamodb update-item \
           --table-name adservice_versions \
